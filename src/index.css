@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", sans-serif;
+  --font-serif: "Playfair Display", serif;
+  
+  /* National Palette */
+  --color-lojuvard: #0047AB;
+  --color-moviy: #00A5C4;
+  --color-tilla: #C5A059; /* Richer Antique Gold */
+  --color-brick: #8B5A2B; /* Darker, traditional brick */
+  --color-ivory: #FDF9EF; /* Warm Rich Ivory */
+  --color-wood-dark: #3a281b; 
+  --color-wood-mid: #5f422e;
+  
+  --color-primary: var(--color-lojuvard);
+  --color-primary-light: var(--color-moviy);
+  --color-primary-dark: #002D71;
+  --color-accent: var(--color-tilla);
+  --color-accent-light: #F0D47C;
+  --color-bg: #EEDDBB; /* Softer parchment */
+  --color-surface: var(--color-ivory);
+  --color-text: #2c1e15;
+  --color-text-muted: #5e4a3d;
+  --color-border: var(--color-brick);
+  --color-error: #a32a2a;
+  --color-success: #2a8a5a;
+  --color-highlight: #f8f1d3;
+  
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+  
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+  --shadow-hover: 0 20px 25px -5px rgba(0,0,0,0.15);
+}
+
+@layer base {
+  body {
+    @apply bg-bg text-text font-sans antialiased min-h-screen flex flex-col;
+    background-image: url('https://cs5.livemaster.ru/storage/8e/7b/b8db963b62026ceb7cf9bb44ca4p--materialy-dlya-tvorchestva-krep-shifon-v-stile-ikat-100-proce.jpg');
+    background-size: 600px;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+  }
+
+  body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, rgba(253, 249, 239, 0.8) 0%, rgba(253, 249, 239, 0.95) 100%);
+      z-index: -1;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif text-primary-dark tracking-wide;
+  }
+}
+
+.navbar {
+  @apply bg-[#2d1e13] text-[#FDF9EF] shadow-[0_4px_30px_rgba(0,0,0,0.3)] border-b-4 border-tilla fixed top-0 left-0 right-0 z-50 h-[100px] flex items-center;
+  background-image: 
+    linear-gradient(to bottom, #4a3423, #2d1e13),
+    url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 0l25 25-25 25-25-25z' fill='%23C5A059' fill-opacity='0.03'/%3E%3C/svg%3E");
+}
+
+.main-content {
+  @apply flex-grow pt-[100px];
+}
+
+.navbar-container {
+  @apply flex justify-between items-center h-full container mx-auto px-6;
+}
+
+.navbar-menu {
+  @apply hidden lg:flex items-center gap-8;
+}
+
+.mobile-menu-btn {
+  @apply lg:hidden text-white p-2;
+}
+
+.navbar-brand {
+  @apply flex items-center gap-4 text-3xl font-serif font-bold text-[#FDF9EF] tracking-tighter;
+}
+
+.nav-link {
+  @apply text-[#FDF9EF]/70 font-medium text-base uppercase tracking-widest hover:text-tilla transition-all duration-300 py-2 px-4 rounded-full;
+}
+
+.nav-link.active {
+  @apply text-tilla font-bold bg-white/5;
+}
+
+.btn {
+  @apply inline-flex items-center justify-center gap-2 px-10 py-4 rounded-lg font-serif font-bold transition-all duration-300 shadow-[6px_6px_0px_0px_#4a3423] border-2 border-tilla bg-tilla text-surface hover:bg-tilla/90 hover:translate-x-1 hover:translate-y-1 hover:shadow-none;
+}
+
+/* ... Card styles ... */
+.card {
+  @apply bg-white rounded-none border-t-8 border-tilla shadow-[20px_20px_0px_0px_rgba(58,40,27,0.05)] transition-all duration-500 flex flex-col p-10 relative overflow-hidden;
+}
+
+.card:hover {
+  @apply shadow-[0_40px_80px_-15px_rgba(58,40,27,0.15)] border-brick;
+}
+
+.badge {
+  @apply inline-block px-3 py-0.5 rounded-full bg-accent/10 border border-accent/30 text-primary text-xs font-medium uppercase tracking-wider;
+}
+
+.page-header {
+  @apply bg-primary text-white mb-12 py-16 relative overflow-hidden;
+}
+
+.hero-title {
+  @apply text-5xl lg:text-6xl font-serif mb-6 leading-tight font-bold text-white;
+}
+
+.input-field {
+  @apply w-full px-4 py-3 rounded-md border border-accent/40 bg-surface focus:outline-none focus:ring-2 focus:ring-accent/30 transition-all;
+}
+

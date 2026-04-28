@@ -1,0 +1,49 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && request.auth.token.email == "astrojamshid@gmail.com" && request.auth.token.email_verified == true;
+    }
+
+    function isValidContent(data) {
+      return data.keys().hasAll(['title', 'contentType', 'grade']) &&
+             data.title is string && data.title.size() > 0 &&
+             data.contentType in ['video', 'tajriba', 'audio', 'game', 'test'] &&
+             data.grade in ['1', '2', '3', '4'] &&
+             (!('url' in data) || data.url is string) &&
+             (!('iframeCode' in data) || data.iframeCode is string) &&
+             (!('description' in data) || data.description is string) &&
+             (!('createdAt' in data) || data.createdAt is timestamp);
+    }
+
+    match /contents/{contentId} {
+      allow read: if true;
+      allow write: if isAdmin() && isValidContent(request.resource.data);
+    }
+
+    match /results/{resultId} {
+      allow read: if true;
+      allow create: if isAuthenticated() && 
+                      request.resource.data.userId == request.auth.uid &&
+                      isValidResult(request.resource.data);
+      allow update, delete: if false;
+    }
+
+    function isValidResult(data) {
+      return data.userId is string &&
+             data.score is number &&
+             data.total is number &&
+             data.testType is string &&
+             data.grade in ['1', '2', '3', '4'] &&
+             data.score >= 0 &&
+             data.score <= data.total &&
+             (!('userName' in data) || (data.userName is string && data.userName.size() < 100)) &&
+             (!('createdAt' in data) || data.createdAt is timestamp);
+    }
+  }
+}

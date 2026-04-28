@@ -1,0 +1,52 @@
+{
+  "entities": {
+    "Content": {
+      "title": "Content",
+      "description": "Ta'limiy kontent (o'yin, tajriba, test, video) muayyan sinf uchun.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "grade": { 
+          "type": "string",
+          "enum": ["1", "2", "3", "4"]
+        },
+        "contentType": {
+          "type": "string",
+          "enum": ["video", "tajriba", "game", "test"]
+        },
+        "url": { "type": "string", "description": "URL manzili (o'yin yoki video uchun)" },
+        "videoUrl": { "type": "string", "description": "Firebase Storage orqali yuklangan video URL manzili" },
+        "iframeCode": { "type": "string", "description": "HTML iframe kodi (videolarni embed qilish uchun)" },
+        "description": { "type": "string" },
+        "data": { "type": "object", "description": "Qo'shimcha ma'lumotlar (masalan, test savollari)" },
+        "createdAt": { "type": "timestamp" }
+      },
+      "required": ["title", "grade", "contentType"]
+    },
+    "TestResult": {
+      "title": "TestResult",
+      "description": "Foydalanuvchining test yoki o'yin natijasi.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "score": { "type": "number" },
+        "total": { "type": "number" },
+        "testType": { "type": "string" },
+        "grade": { "type": "string" },
+        "createdAt": { "type": "timestamp" }
+      },
+      "required": ["userId", "score", "total", "testType"]
+    }
+  },
+  "firestore": {
+    "contents": {
+      "schema": { "$ref": "#/entities/Content" },
+      "description": "All educational materials."
+    },
+    "results": {
+      "schema": { "$ref": "#/entities/TestResult" },
+      "description": "User performance tracking."
+    }
+  }
+}
